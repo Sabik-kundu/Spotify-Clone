@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spotify Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<canvas id="bg-canvas"></canvas>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="./Images/sp.png" alt="Spotify" onerror="this.style.display='none'">
+      <span class="logo-text">Sportify</span>
+    </div>
+    <nav>
+      <div class="nav-item active" data-view="home"><span class="nav-icon">🏠︎</span><span>Home</span></div>
+      <div class="nav-item" data-view="search"><span class="nav-icon">⌕</span><span>Search</span></div>
+      <div class="nav-item" data-view="library"><span class="nav-icon">⊞</span><span>Your Library</span></div>
+    </nav>
+    <div class="sdiv"></div>
+    <div class="slabel">Quick Links</div>
+    <div class="pl-item" id="sb-create">＋ Create  PlayList</div>
+    <div class="pl-item" id="sb-liked">♡ Liked Songs</div>
+    <div class="pl-item" id="sb-episodes">◉ Your Uploads</div>
+    <div class="sdiv"></div>
+    <div class="slabel">PlayLists</div>
+    <div id="sb-playlists"></div>
+  </aside>
+
+  <main class="main" id="main">
+    <div class="main-scroll" id="main-scroll"></div>
+  </main>
+
+  <div class="player" id="player-bar">
+    <div class="np">
+      <div class="disc-wrap" id="disc-wrap-btn" title="Expand Player (F)">
+        <div class="disc" id="disc">
+          <img src="https://picsum.photos/seed/music/200" alt="Art" id="np-img">
+        </div>
+      </div>
+      <div class="np-info">
+        <h4 id="np-title">Select a Song</h4>
+        <p id="np-artist">-</p>
+      </div>
+      <button class="like-btn" id="like-btn" title="Like (L)">♡</button>
+    </div>
+    <div class="ctrl">
+      <canvas id="viz" height="36"></canvas>
+      <div class="ctrl-row">
+        <button class="c-btn" id="btn-shuffle" title="Shuffle">⇄</button>
+        <button class="c-btn" id="btn-prev" title="Previous">⏮</button>
+        <button class="c-btn pp-btn" id="btn-play" title="Play/Pause (Space)">▶</button>
+        <button class="c-btn" id="btn-next" title="Next">⏭</button>
+        <button class="c-btn" id="btn-repeat" title="Repeat">↻</button>
+      </div>
+      <div class="prog-row">
+        <span class="t-lbl" id="t-cur">0:00</span>
+        <div class="prog-track" id="prog-track">
+          <div class="prog-fill" id="prog-fill" style="width:0%">
+            <div class="prog-thumb"></div>
+          </div>
+        </div>
+        <span class="t-lbl" id="t-dur">-:--</span>
+      </div>
+    </div>
+    <div class="vol-right">
+      <button class="vol-btn" id="vol-btn">🔊</button>
+      <div class="vol-track" id="vol-track">
+        <div class="vol-fill" id="vol-fill" style="width:70%"></div>
+      </div>
+      <div class="player-extra-btns">
+        <button class="btn-ico" id="btn-queue" title="Queue (Q)">☰</button>
+        <button class="btn-ico" id="btn-expand" title="Full Player (F)">F</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="queue-panel" id="queue-panel">
+  <div class="qp-header">
+    <span class="qp-title">Queue</span>
+    <button class="qp-close" id="qp-close">X</button>
+  </div>
+  <div class="qp-body" id="qp-body"></div>
+</div>
+
+<div class="expanded-player" id="expanded-player">
+  <div class="ep-bg" id="ep-bg"></div>
+  <div class="ep-overlay"></div>
+  <div class="ep-header">
+    <span class="ep-title-small">Now Playing</span>
+    <button class="ep-close-btn" id="ep-close-btn">X Collapse</button>
+    <div style="width:100px"></div>
+  </div>
+  <div class="ep-body">
+    <div class="ep-left">
+      <div class="ep-disc-wrap">
+        <div class="ep-disc" id="ep-disc">
+          <img id="ep-img" src="https://picsum.photos/seed/music/400" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="ep-right">
+      <div class="ep-song-title" id="ep-song-title">No track selected</div>
+      <div class="ep-song-artist" id="ep-song-artist"></div>
+      <div class="ep-like-row">
+        <button class="ep-like-btn" id="ep-like-btn">♡</button>
+        <span style="font-size:12px;color:var(--muted)" id="ep-like-label">Add to Liked Songs</span>
+      </div>
+      <div class="ep-prog-row">
+        <span class="ep-t" id="ep-t-cur">0:00</span>
+        <div class="ep-prog-track" id="ep-prog-track">
+          <div class="ep-prog-fill" id="ep-prog-fill" style="width:0%">
+            <div class="ep-prog-thumb"></div>
+          </div>
+        </div>
+        <span class="ep-t" id="ep-t-dur">-:--</span>
+      </div>
+      <div class="ep-ctrl">
+        <button class="c-btn" id="ep-btn-shuffle">⇄</button>
+        <button class="c-btn" id="ep-btn-prev">⏮</button>
+        <button class="c-btn pp-btn" id="ep-btn-play">▶</button>
+        <button class="c-btn" id="ep-btn-next">⏭</button>
+        <button class="c-btn" id="ep-btn-repeat">↻</button>
+      </div>
+      <div class="ep-vol-row">
+        <span style="font-size:14px;color:var(--muted)" id="ep-vol-btn">🔊</span>
+        <div class="ep-vol-track" id="ep-vol-track">
+          <div class="ep-vol-fill" id="ep-vol-fill" style="width:70%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ctx-menu" id="ctx-menu">
+  <div class="ctx-item" id="ctx-play">▶ &nbsp;Play Now</div>
+  <div class="ctx-item" id="ctx-queue">＋ &nbsp;Add to Queue</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" id="ctx-like">♡ &nbsp;Like Song</div>
+  <div class="ctx-item" id="ctx-playlist">📁 &nbsp;Add to Playlist</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" id="ctx-artist">👤 &nbsp;Go to Artist</div>
+</div>
+
+<div class="modal-ov" id="modal">
+  <div class="modal">
+    <h3>Add to playlist</h3>
+    <div class="m-list" id="m-list"></div>
+    <button class="m-close" id="m-close">Close</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="three.min.js"></script>
+<script src="s.js"></script>
+</body>
+</html>
