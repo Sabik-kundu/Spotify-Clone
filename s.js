@@ -619,6 +619,7 @@ function detectBeat() {
   });
 })();
 
+// cursor animations
 (function () {
   const cursorDot = document.getElementById("cursor-dot");
   const cursorRing = document.getElementById("cursor-ring");
@@ -653,6 +654,7 @@ function detectBeat() {
   animateCursor();
 })();
 
+//songs
 const tracks = [
   { id: 1,  title: "Shape Of You",       artist: "Ed Sheeran",                    image: "./Images/SOY.jpg",        url: "./trk/SOY.mp3" },
   { id: 2,  title: "Eraser",             artist: "Ed Sheeran",                    image: "./Images/Eraser.jpg",     url: "./trk/Eraser.mp3" },
@@ -676,6 +678,7 @@ const tracks = [
   { id: 20, title: "Ye Tune Kya Kiya",  artist: "Javed Bhasir",                  image: "https://i.ytimg.com/vi/BguYbxZKGOE/hqdefault.jpg?v=61eef018", url: "./trk/ytkk.mp3" },
 ];
 
+// playlists
 let playlists = [
   { id: 1, name: "Chill Vibes",  songs: [] },
   { id: 2, name: "Workout Mix", songs: [] },
@@ -706,6 +709,7 @@ let heroInterval = null;
 const miniVisualizerCanvas = document.getElementById("viz");
 const miniVisualizerContext = miniVisualizerCanvas.getContext("2d");
 
+// beat box bars
 function drawMiniVisualizer() {
   requestAnimationFrame(drawMiniVisualizer);
   const canvasWidth = miniVisualizerCanvas.offsetWidth;
