@@ -82,7 +82,12 @@ function dtb() {
     mouse.y = -(e.clientY / innerHeight) * 2 + 1;
   });
 
-  const aVert = `varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`;
+  const aVert = `
+    varying vec2 vUv;
+    void main(){
+    vUv=uv;
+    gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);
+    }`;
   const aFrag = `
     uniform float uT;
     uniform float uI;
@@ -98,9 +103,9 @@ function dtb() {
       float ny = n(uv * 2.5 - t * 0.5) * 0.04;
       vec2 w = uv + vec2(nx, ny);
       float y1 = sin(w.x * 7.0 + t) * 0.07 + sin(w.x * 3.0 - t * 0.8) * 0.04;
-      float b1=smoothstep(0.22+y1,0.30+y1,w.y)*(1.0-smoothstep(0.46+y1,0.56+y1,w.y));
+      float b1=smoothstep(0.22+y1, 0.30+y1, w.y) * (1.0-smoothstep(0.46+y1, 0.56+y1, w.y));
       float y2=sin(w.x*5.5-t*1.3)*0.06+sin(w.x*11.0+t*0.45)*0.03;
-      float b2=smoothstep(0.5+y2,0.58+y2,w.y)*(1.0-smoothstep(0.70+y2,0.78+y2,w.y));
+      float b2=smoothstep(0.5+y2, 0.58+y2, w.y)*(1.0-smoothstep(0.70+y2, 0.78+y2, w.y));
       float y3=sin(w.x*9.0+t*0.9)*0.05+sin(w.x*4.0-t*1.1)*0.03;
       float b3=smoothstep(0.62+y3,0.70+y3,w.y)*(1.0-smoothstep(0.85+y3,0.92+y3,w.y));
       float bot=(1.0-smoothstep(0.0,0.40,w.y))*0.28;
