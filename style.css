@@ -75,7 +75,7 @@ body {
 .cursor-ring {
   width: 32px;
   height: 32px;
-  border: 1px solid rgba(29, 185, 84, 0.45);
+  border: 1px solid rgba(29, 185, 84, 0.01);
   border-radius: 50%;
   position: fixed;
   pointer-events: none;
@@ -90,7 +90,7 @@ body {
 .cursor-ring.hover {
   width: 48px;
   height: 48px;
-  border-color: rgba(29, 185, 84, 0.7);
+  border-color: rgba(29, 185, 84, 0.02);
   background: rgba(29, 185, 84, 0.04);
 }
 .cursor-dot.click {
