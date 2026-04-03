@@ -54,6 +54,7 @@ function detectBeat() {
   return false;
 }
 
+// t.js things -> bg details
 (function () {
   const backgroundCanvas = document.getElementById("bg-canvas");
   const renderer = new THREE.WebGLRenderer({
